@@ -5,10 +5,10 @@ import { type RouteConfig, index, route } from "@react-router/dev/routes";
 export default [
     route("/", "routes/home.tsx"), 
     route("/test", "routes/test.tsx"),
-    route("/module", "routes/courseModules.tsx"),
     route("/groups", "routes/groups.tsx"),
     route("/postings", "routes/internshipPostings.tsx"),
     route("/landing", "routes/landing.tsx"),
     route("/profile", "routes/profile.tsx"),
-    route("/dashboard", "routes/userDashboard.tsx")
+    route("/dashboard", "routes/userDashboard.tsx"),
+    route("/modules", "routes/modules.tsx")
 ] satisfies RouteConfig;
