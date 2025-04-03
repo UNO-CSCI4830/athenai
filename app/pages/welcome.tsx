@@ -10,6 +10,7 @@ export function Welcome() {
         <h1 className="text-2xl font-bold mb-10">Welcome</h1>
         <ul className="space-y-4 text-sm">
           <SidebarLink href="/home" icon="🏠" label="Home" />
+          <SidebarLink href="/dashboard" icon="🗂️" label="Dashboard" />
           <SidebarLink href="/profile" icon="📖" label="Profile" />
           <SidebarLink href="/module" icon="📚" label="Modules" />
           <SidebarLink href="/groups" icon="🤝" label="Groups" />
