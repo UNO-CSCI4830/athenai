@@ -11,7 +11,7 @@ export function Welcome() {
         <ul className="space-y-4 text-sm">
           <SidebarLink href="/home" icon="🏠" label="Home" />
           <SidebarLink href="/profile" icon="📖" label="Profile" />
-          <SidebarLink href="/module" icon="📚" label="Modules" />
+          <SidebarLink href="/modules" icon="📚" label="Modules" />
           <SidebarLink href="/networking" icon="🤝" label="Networking" />
           <SidebarLink href="/settings" icon="⚙️" label="Settings" />
         </ul>
