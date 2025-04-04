@@ -1,6 +1,7 @@
 import { TestButton } from "~/components/TestButton";
-import logoDark from "..//assets/logo-dark.svg";
-import logoLight from "..//assets/logo-light.svg";
+//import logoDark from "..//assets/logo-dark.svg";
+//import logoLight from "..//assets/logo-light.svg";
+import athenaiLogo from "..//assets/athenaiLogo.jpg";
 
 export function Welcome() {
   return (
@@ -25,12 +26,12 @@ export function Welcome() {
         <header className="flex flex-col items-center gap-9">
           <div className="w-[500px] max-w-[100vw] p-4">
             <img
-              src={logoLight}
+              //src={logoLight}
               alt="Logo Light"
               className="block w-full dark:hidden"
             />
             <img
-              src={logoDark}
+              //src={logoDark}
               alt="Logo Dark"
               className="hidden w-full dark:block"
             />
