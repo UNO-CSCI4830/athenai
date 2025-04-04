@@ -1,6 +1,7 @@
 import { TestButton } from "~/components/TestButton";
-import logoDark from "..//assets/logo-dark.svg";
-import logoLight from "..//assets/logo-light.svg";
+//import logoDark from "..//assets/logo-dark.svg";
+//import logoLight from "..//assets/logo-light.svg";
+import athenaiLogo from "..//assets/athenaiLogo.jpg";
 
 export function Welcome() {
   return (
@@ -9,11 +10,14 @@ export function Welcome() {
       <aside className="w-64 p-6 backdrop-blur-md bg-white/5 border-r border-white/10">
         <h1 className="text-2xl font-bold mb-10">Welcome</h1>
         <ul className="space-y-4 text-sm">
-          <SidebarLink href="/home" icon="🏠" label="Home" />
+          <SidebarLink href="/" icon="🏠" label="Home" />
+          <SidebarLink href="/dashboard" icon="🗂️" label="Dashboard" />
           <SidebarLink href="/profile" icon="📖" label="Profile" />
           <SidebarLink href="/modules" icon="📚" label="Modules" />
           <SidebarLink href="/networking" icon="🤝" label="Networking" />
+          <SidebarLink href="/postings" icon="⚙️" label="Internship Posting" />
           <SidebarLink href="/settings" icon="⚙️" label="Settings" />
+          
         </ul>
       </aside>
 
@@ -23,12 +27,12 @@ export function Welcome() {
         <header className="flex flex-col items-center gap-9">
           <div className="w-[500px] max-w-[100vw] p-4">
             <img
-              src={logoLight}
+              //src={logoLight}
               alt="Logo Light"
               className="block w-full dark:hidden"
             />
             <img
-              src={logoDark}
+              //src={logoDark}
               alt="Logo Dark"
               className="hidden w-full dark:block"
             />
