@@ -5,7 +5,7 @@ export function UserDashboardPage() {
         <aside className="w-64 p-6 backdrop-blur-md bg-white/5 border-r border-white/10">
           <h1 className="text-2xl font-bold mb-10">Welcome</h1>
           <ul className="space-y-4 text-sm">
-            <SidebarLink href="/home" icon="🏠" label="Home" />
+            <SidebarLink href="/" icon="🏠" label="Home" />
             <SidebarLink href="/dashboard" icon="🗂️" label="Dashboard" />
             <SidebarLink href="/profile" icon="📖" label="Profile" />
             <SidebarLink href="/module" icon="📚" label="Modules" />
@@ -24,7 +24,7 @@ export function UserDashboardPage() {
                     <div className="flex gap-4">
                                 <button className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
                                     Upload
-                                </button>
+                                </button>   
                                 <button className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
                                     Edit
                                 </button>
@@ -33,11 +33,12 @@ export function UserDashboardPage() {
                 {/* Community Boards Section */}
                 <div className="backdrop-blur-md bg-white/10 border border-white/10 p-4 rounded-md flex items-center justify-between">
                     {/* Community Boards Title */}
-                    <h2 className="text-2xl font-semibold mb-0">Community Boards</h2>
+                    <h2 className="text-2xl font-semibold mb-0">Groups</h2>
                     <div className="flex gap-4">
-                                <button className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
+                                <a  href="/groups"
+                                    className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
                                     View
-                                </button>
+                                </a>
                     </div>
                 </div>
                 {/* Profile Section */}
@@ -46,10 +47,11 @@ export function UserDashboardPage() {
                     <h2 className="text-2xl font-semibold mb-0">Update Profile</h2>
                     <p className="text-sm text-gray-200">Progress: 45%</p>
                     </div>
-                    <div className="flex gap-4">
-                                <button className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
-                                    Continue
-                                </button>
+                    <div>
+                        <a href="/profile"
+                            className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
+                            Continue
+                        </a>
                     </div>
                 </div>
             </div>
@@ -107,60 +109,73 @@ export function UserDashboardPage() {
                             </div>
                         </div>
                         {/* Add Goal Button */}
-                        <div className="flex justify-center mt-2">
-                            <button className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
+                        <div className="flex justify-center gap-2 mt-2">
+                            <a href="/goals"
+                                className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
+                                View All Goals
+                            </a>
+                            <a  href="/goals"
+                                className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
                                 Add New Goal
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
 
-                {/* Course Section */}
+                {/* Modules Section */}
                 <div className="backdrop-blur-md bg-white/10 border border-white/10 p-4 rounded-md">
                     <h2 className="text-2xl font-semibold mb-6">Courses</h2>
                     {/*List*/}
                     <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mt-8">
-                        {/* Course 1*/}
+                        {/* Modules 1*/}
                         <div className="backdrop-blur-md bg-white/10 border border-white/10 p-4 rounded-md flex items-center justify-between">
                             <div>
-                                <h2 className="text-2xl font-semibold">Course 1</h2>
+                                <h2 className="text-2xl font-semibold">Module 1</h2>
                                 <p className="text-sm text-gray-200">Progress: 45%</p>
                             </div>
                             <div className="flex gap-4">
-                                <button className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
+                                <a href="/module"
+                                    className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
                                     Continue
-                                </button>
+                                </a>
                             </div>
                         </div>
-                        {/* Course 2*/}
+                        {/* Module 2*/}
                         <div className="backdrop-blur-md bg-white/10 border border-white/10 p-4 rounded-md flex items-center justify-between">
                             <div>
-                                <h2 className="text-2xl font-semibold">Course 2</h2>
+                                <h2 className="text-2xl font-semibold">Module 2</h2>
                                 <p className="text-sm text-gray-200">Progress: 95%</p>
                             </div>
                             <div className="flex gap-4">
-                                <button className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
+                                <a href="/module"
+                                 className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
                                     Continue
-                                </button>
+                                </a>
                             </div>
                         </div>
                         {/* Course 3*/}
                         <div className="backdrop-blur-md bg-white/10 border border-white/10 p-4 rounded-md flex items-center justify-between">
                             <div>
-                                <h2 className="text-2xl font-semibold">Course 3</h2>
+                                <h2 className="text-2xl font-semibold">Module 3</h2>
                                 <p className="text-sm text-gray-200">Progress: 75%</p>
                             </div>
                             <div className="flex gap-4">
-                                <button className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
+                                <a href="/module"
+                                    className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
                                     Continue
-                                </button>
+                                </a>
                             </div>
                         </div>
                         {/* Add Goal Button */}
-                        <div className="flex justify-center mt-2">
-                            <button className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
-                                Add New Course
-                            </button>
+                        <div className="flex justify-center gap-2 mt-2">
+                            <a href="/module"
+                                className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
+                                View All Modules
+                            </a>
+                            <a href="/module"
+                                className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
+                                Add New Module
+                            </a>
                         </div>
                     </div>
                  </div>
@@ -221,25 +236,12 @@ export function UserDashboardPage() {
                                 </button>
                             </div>
                         </div>
-                        {/* Message 4 */}
-                        <div className="backdrop-blur-md bg-white/10 border border-white/10 p-4 rounded-md flex items-center justify-between">
-                            <img
-                                src="https://via.placeholder.com/50"
-                                alt="Profile"
-                                className="w-12 h-12 rounded-full"
-                            />
-                            <div>
-                                <h2 className="text-lg font-semibold">First Name Last Name</h2>
-                                <p className="text-sm text-gray-200">Company 4</p>
-                            </div>
-                            <div className="flex gap-4">
-                                <button className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
-                                    Message
-                                </button>
-                            </div>
-                        </div>
                         {/* Add Goal Button */}
-                        <div className="flex justify-center mt-2">
+                        <div className="flex justify-center gap-2 mt-2">
+                            <a href="/module"
+                                className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
+                                View All Messages
+                            </a>
                             <button className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
                                 Start New Conversation
                             </button>
@@ -322,6 +324,13 @@ export function UserDashboardPage() {
                             Apply Now
                         </button>
                     </div>
+                </div>
+                {/* Other Jobs Button */}
+                <div className="flex justify-center gap-2 mt-2">
+                    <a href="/jobs"
+                        className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
+                        View All Jobs
+                    </a>
                 </div>
             </div>
         </main>
