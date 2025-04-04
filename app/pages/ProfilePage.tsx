@@ -8,12 +8,14 @@ export function ProfilePage() {
       <aside className="w-64 p-6 backdrop-blur-md bg-white/5 border-r border-white/10">
         <h1 className="text-2xl font-bold mb-10">Profile</h1>
         <ul className="space-y-4 text-sm">
-          <SidebarLink icon="👤" label="Overview" />
-          <SidebarLink icon="✍️" label="Edit Profile" />
-          <SidebarLink icon="🔒" label="Change Password" />
-          <SidebarLink icon="📅" label="Dashboard" />
-          <SidebarLink icon="🔔" label="Notifications" />
-          <SidebarLink icon="⚙️" label="Settings" />
+          <SidebarLink href="/" icon="🏠" label="Home" />
+          <SidebarLink href="/dashboard" icon="🗂️" label="Dashboard" />
+          <SidebarLink href="/profile" icon="📖" label="Profile" />
+          <SidebarLink href="/modules" icon="📚" label="Modules" />
+          <SidebarLink href="/networking" icon="🤝" label="Networking" />
+          <SidebarLink href="/groups" icon="🤝" label="Groups" />
+          <SidebarLink href="/postings" icon="⚙️" label="Internship Posting" />
+          <SidebarLink href="/settings" icon="⚙️" label="Settings" />
         </ul>
       </aside>
 
@@ -21,9 +23,9 @@ export function ProfilePage() {
       <main className="flex-1 p-10 space-y-10">
         {/* Top Tabs */}
         <div className="flex gap-6 text-sm">
-          <div className="px-4 py-1 bg-white/10 backdrop-blur-md rounded-full text-white">Overview</div>
-          <div className="px-4 py-1 hover:bg-white/10 rounded-full cursor-pointer">Courses</div>
-          <div className="px-4 py-1 hover:bg-white/10 rounded-full cursor-pointer">Certificates</div>
+          <div className="px-4 py-1 bg-white/10 backdrop-blur-md rounded-full text-white">Edit Profile</div>
+          <div className="px-4 py-1 hover:bg-white/10 rounded-full cursor-pointer">Change Password</div>
+          <div className="px-4 py-1 hover:bg-white/10 rounded-full cursor-pointer">Notifications</div>
         </div>
 
         {/* Profile Picture Section */}
@@ -140,10 +142,12 @@ function ProfileCard({ icon, color, title }: { icon: React.ReactNode; color: str
 }
 
 // 🧭 Sidebar Link
-function SidebarLink({ icon, label }: { icon: string; label: string }) {
+function SidebarLink({ href, icon, label }: { href: string; icon: string; label: string }) {
   return (
     <li className="flex items-center gap-2 hover:translate-x-1 transition cursor-pointer">
-      <span>{icon}</span> {label}
+      <a href={href} className="flex items-center gap-2">
+        <span>{icon}</span> {label}
+      </a>
     </li>
   );
 }
