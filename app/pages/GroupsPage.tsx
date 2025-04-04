@@ -11,10 +11,10 @@ export function GroupsPage() {
         <h1 className="text-2xl font-bold mb-10">Groups</h1>
         <ul className="space-y-4 text-sm">
           <SidebarLink href="/" icon="🏠" label="Home" />
-          <SidebarLink icon="🔍" label="Find A Group" /> {/*dont have pages yet, will have to wait for backend*/}
+          {/* <SidebarLink icon="🔍" label="Find A Group" /> dont have pages yet, will have to wait for backend
           <SidebarLink icon="👤" label="My Groups" />
           <SidebarLink icon="✍️" label="My Postings" />
-          <SidebarLink icon="🔔" label="Interactions" />
+          <SidebarLink icon="🔔" label="Interactions" /> */}
         </ul>
       </aside>
 
