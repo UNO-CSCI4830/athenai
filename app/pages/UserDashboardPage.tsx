@@ -1,19 +1,9 @@
+import Header from "../components/Header";
+
 export function UserDashboardPage() {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white font-sans flex">
-        {/* Sidebar */}
-        <aside className="w-64 p-6 backdrop-blur-md bg-white/5 border-r border-white/10">
-          <h1 className="text-2xl font-bold mb-10">Welcome</h1>
-          <ul className="space-y-4 text-sm">
-            <SidebarLink href="/" icon="🏠" label="Home" />
-            <SidebarLink href="/dashboard" icon="🗂️" label="Dashboard" />
-            <SidebarLink href="/profile" icon="📖" label="Profile" />
-            <SidebarLink href="/modules" icon="📚" label="Modules" />
-            <SidebarLink href="/groups" icon="🤝" label="Groups" />
-            <SidebarLink href="/postings" icon="⚙️" label="Internship Posting" />
-            <SidebarLink href="/settings" icon="⚙️" label="Settings" />
-          </ul>
-        </aside>
+        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white font-sans flex flex-col">
+        <Header />
         
         {/* Main Content */}
         <main className="flex-1 p-10 space-y-10">
