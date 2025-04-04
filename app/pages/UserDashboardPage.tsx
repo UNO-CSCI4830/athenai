@@ -1,4 +1,5 @@
 import Header from "../components/Header";
+import Footer from "~/components/Footer";
 
 export function UserDashboardPage() {
     return (
@@ -325,7 +326,8 @@ export function UserDashboardPage() {
                 </div>
             </div>
         </main>
-        </div>
+        <Footer />
+    </div>
     );
 }
 
