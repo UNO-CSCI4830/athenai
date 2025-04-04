@@ -1,5 +1,6 @@
 import { FaVideo, FaFlask, FaClipboardList, FaBriefcase, FaUsers, FaGraduationCap } from "react-icons/fa";
 import Header from "../components/Header";
+import Footer from "~/components/Footer";
 
 export function LearningModules() {
   return (
@@ -7,7 +8,7 @@ export function LearningModules() {
       <Header />
 
       {/* Main Content */}
-      <main className="flex-1 p-10 space-y-10">
+      <main className="flex-1 p-10  space-y-10">
         {/* Top Tabs */}
         <div className="flex gap-6 text-sm">
           <div className="px-4 py-1 bg-white/10 backdrop-blur-md rounded-full text-white">Library</div>
@@ -48,6 +49,8 @@ export function LearningModules() {
           </div>
         </div>
       </main>
+      <div className="h-[10rem]"></div>
+      <Footer />
     </div>
   );
 }

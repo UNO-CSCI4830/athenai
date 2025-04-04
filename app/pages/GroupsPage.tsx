@@ -3,6 +3,7 @@ import PostCard from '../components/PostCard';
 import groupBanner from '../assets/groupBanner.jpg'
 import groupImage from '../assets/athenaiLogo.jpg'
 import Header from '../components/Header';
+import Footer from '~/components/Footer';
 
 export function GroupsPage() {
   return (
@@ -53,6 +54,7 @@ export function GroupsPage() {
             {/* Add more posts here */}
           </div>
         </main>
+        <Footer />
       </div>
     </div>
   );
