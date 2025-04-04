@@ -1,20 +1,10 @@
+import Header from '../components/Header';
+
 export function LandingPage() {
     return (
       <div className="min-h-screen flex flex-col">
         {/* Header */}
-        <header className="bg-blue-900 shadow-md py-4 px-6 flex justify-between items-center">
-          {/* Navigation Menu */}
-          <nav className="space-x-8">
-            <button className="text-white hover:text-gray-400">Home</button>
-            <button className="text-white hover:text-gray-400">About</button>
-            <button className="text-white hover:text-gray-400">Contact</button>
-          </nav>
-          {/* Sign Up and Login */}
-          <nav className="space-x-8">
-            <button className="text-white hover:text-gray-400">Sign Up</button>
-            <button className="text-white hover:text-gray-400">Login</button>
-          </nav>
-        </header>
+        <Header />
   
         {/* Main Split Layout */}
         <main className="flex flex-1">

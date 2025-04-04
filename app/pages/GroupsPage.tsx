@@ -2,24 +2,14 @@ import React from 'react';
 import PostCard from '../components/PostCard';
 import groupBanner from '../assets/groupBanner.jpg'
 import groupImage from '../assets/athenaiLogo.jpg'
+import Header from '../components/Header';
 
 export function GroupsPage() {
   return (
     <div className="min-h-screen flex font-sans text-white bg-gray-900">
-      {/* Sidebar */}
-      <aside className="w-64 p-6 backdrop-blur-md bg-white/5 border-r border-white/10 min-h-screen">
-        <h1 className="text-2xl font-bold mb-10">Groups</h1>
-        <ul className="space-y-4 text-sm">
-          <SidebarLink href="/" icon="🏠" label="Home" />
-          {/* <SidebarLink icon="🔍" label="Find A Group" /> dont have pages yet, will have to wait for backend
-          <SidebarLink icon="👤" label="My Groups" />
-          <SidebarLink icon="✍️" label="My Postings" />
-          <SidebarLink icon="🔔" label="Interactions" /> */}
-        </ul>
-      </aside>
-
       {/* Main Section */}
       <div className="flex-1 flex flex-col overflow-hidden">
+        <Header />
         {/* Group Banner */}
         <div
           className="h-48 bg-cover bg-center"
