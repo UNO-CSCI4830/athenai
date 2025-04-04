@@ -14,6 +14,8 @@ export function Welcome() {
           <SidebarLink href="/modules" icon="📚" label="Modules" />
           <SidebarLink href="/networking" icon="🤝" label="Networking" />
           <SidebarLink href="/settings" icon="⚙️" label="Settings" />
+
+          <SidebarLink href="/postings" icon="⚙️" label="Internship Posting" />
         </ul>
       </aside>
 

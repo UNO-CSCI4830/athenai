@@ -1,13 +1,12 @@
-import type { Route } from "./+types/home";
-import { InternshipPostingsPage } from "~/pages/InternshipPostingsPage";
+import InternshipPage from "~/pages/InternshipPage"; 
 
-export function meta({}: Route.MetaArgs) {
+export function meta() {
   return [
     { title: "Internship Postings" },
     { name: "what does this do", content: "Contains page test!" },
   ];
 }
 
-export default function InternshipPostings() {
-  return <InternshipPostingsPage />;
+export default function Internship() {
+  return <InternshipPage />;
 }
