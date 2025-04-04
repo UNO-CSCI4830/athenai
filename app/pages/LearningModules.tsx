@@ -7,11 +7,16 @@ export function LearningModules() {
       <aside className="w-64 p-6 backdrop-blur-md bg-white/5 border-r border-white/10">
         <h1 className="text-2xl font-bold mb-10">Home</h1>
         <ul className="space-y-4 text-sm">
-          <SidebarLink icon="🏠" label="Home" />
-          <SidebarLink icon="📚" label="Modules" />
+          <SidebarLink href="/" icon="🏠" label="Home" />
+          <SidebarLink href="/dashboard" icon="🗂️" label="Dashboard" />
+          <SidebarLink href="/profile" icon="📖" label="Profile" />
+          <SidebarLink href="/modules" icon="📚" label="Modules" />
           <SidebarLink icon="📈" label="Skill Assessments" />
-          <SidebarLink icon="🤝" label="Networking" />
-          <SidebarLink icon="⚙️" label="Settings" />
+          <SidebarLink href="/networking" icon="🤝" label="Networking" />
+          <SidebarLink href="/groups" icon="🤝" label="Groups" />
+          <SidebarLink href="/postings" icon="⚙️" label="Internship Posting" />
+          <SidebarLink href="/settings" icon="⚙️" label="Settings" />
+
         </ul>
       </aside>
 
@@ -74,10 +79,12 @@ function ModuleCard({ icon, color, title }: { icon: React.ReactNode; color: stri
 }
 
 // 🧭 Sidebar Link
-function SidebarLink({ icon, label }: { icon: string; label: string }) {
+function SidebarLink({ href, icon, label }: { href: string; icon: string; label: string }) {
   return (
     <li className="flex items-center gap-2 hover:translate-x-1 transition cursor-pointer">
-      <span>{icon}</span> {label}
+      <a href={href} className="flex items-center gap-2">
+        <span>{icon}</span> {label}
+      </a>
     </li>
   );
 }

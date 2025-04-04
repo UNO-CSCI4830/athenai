@@ -8,8 +8,9 @@ export function UserDashboardPage() {
             <SidebarLink href="/" icon="🏠" label="Home" />
             <SidebarLink href="/dashboard" icon="🗂️" label="Dashboard" />
             <SidebarLink href="/profile" icon="📖" label="Profile" />
-            <SidebarLink href="/module" icon="📚" label="Modules" />
+            <SidebarLink href="/modules" icon="📚" label="Modules" />
             <SidebarLink href="/groups" icon="🤝" label="Groups" />
+            <SidebarLink href="/postings" icon="⚙️" label="Internship Posting" />
             <SidebarLink href="/settings" icon="⚙️" label="Settings" />
           </ul>
         </aside>
