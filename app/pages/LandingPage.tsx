@@ -1,4 +1,5 @@
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 export function LandingPage() {
     return (
@@ -9,7 +10,7 @@ export function LandingPage() {
         {/* Main Split Layout */}
         <main className="flex flex-1">
           {/* Left Side - White */}
-          <section className="w-[45%] bg-white flex items-center justify-center p-8">
+          <section className="w-[45%] bg-white flex items-center justify-center p-8 h-[48rem]">
             <div className="text-center">
               <h1 className="text-8xl font-bold text-blue-600 mb-4">AthenA.I.</h1>
               <p className="text-lg text-gray-700">Empowering your future.</p>
@@ -24,6 +25,9 @@ export function LandingPage() {
             </div>
           </section>
         </main>
+
+        {/* Footer */}
+        <Footer />
       </div>
     )
   }

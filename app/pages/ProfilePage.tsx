@@ -1,6 +1,7 @@
 import { FaLink, FaPhoneAlt, FaEnvelope} from "react-icons/fa";
 import profilePic from "..//assets/profilePic.png";
 import Header from "../components/Header";
+import Footer from "~/components/Footer";
 
 export function ProfilePage() {
   return (
@@ -113,6 +114,7 @@ export function ProfilePage() {
           <p className="text-sm text-gray-300 mt-2">75% Complete</p>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
