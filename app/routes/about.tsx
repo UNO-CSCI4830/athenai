@@ -3,7 +3,7 @@ import { AboutPage } from "~/pages/AboutPage";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Course Modules" },
+    { title: "About" },
     { name: "what does this do", content: "Contains page test!" },
   ];
 }

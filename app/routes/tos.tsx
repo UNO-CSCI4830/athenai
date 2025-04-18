@@ -1,13 +1,13 @@
 import type { Route } from "./+types/home";
-import { ContactPage } from "~/pages/ContactPage";
+import { TOSPage } from "~/pages/TOSPage.tsx";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Contact Us" },
+    { title: "TOS" },
     { name: "what does this do", content: "Contains page test!" },
   ];
 }
 
-export default function Contact() {
-  return <ContactPage />;
+export default function TOS() {
+  return <TOSPage />;
 }
