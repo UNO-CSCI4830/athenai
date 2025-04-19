@@ -1,7 +1,34 @@
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export function LandingPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      setError("");
+      window.location.href = "/profile";
+    } catch (err: any) {
+      if (err.code === "auth/user-not-found") {
+        setError("No account found with this email.");
+      } else if (err.code === "auth/wrong-password") {
+        setError("Incorrect password.");
+      } else {
+        setError("Login failed. Please try again.");
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
