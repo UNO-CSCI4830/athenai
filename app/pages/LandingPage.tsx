@@ -44,29 +44,59 @@ export function LandingPage() {
           </div>
         </section>
 
-        {/* Right Side - Blue */}
-        <section className="w-[55%] bg-blue-600 text-white flex flex-col items-center justify-center p-8 space-y-6">
-          <div className="text-center">
-            <h2 className="text-3xl font-semibold mb-4">Discover More</h2>
-            <p className="text-lg mb-6">
-              AthenA.I. has a wide range of features to help you achieve your goals.
-            </p>
+        {/* Right Side - Blue with Login Form */}
+        <section className="w-[55%] bg-blue-600 text-white flex items-center justify-center p-8">
+          <div className="bg-white/10 p-8 rounded-lg backdrop-blur-md border border-white/10 w-full max-w-md space-y-6">
+            <h2 className="text-3xl font-bold text-center">Log In</h2>
 
-            {/* Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/registrations"
-                className="inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg hover:bg-gray-100 transition"
+            {error && <p className="text-red-400 text-sm text-center">{error}</p>}
+
+            <form onSubmit={handleLogin}>
+              <div>
+                <label className="block mb-1 text-sm">Email</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full p-2 rounded bg-white/20 text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block mb-1 text-sm">Password</label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full p-2 rounded bg-white/20 text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    className="absolute right-3 top-2.5 text-white/60 hover:text-white"
+                  >
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </button>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-blue-600 hover:bg-blue-700 transition text-white font-semibold py-2 rounded mt-4"
               >
-                Sign up
-              </a>
-              <a
-                href="/login"
-                className="inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg hover:bg-gray-100 transition"
-              >
-                Login
-              </a>
-            </div>
+                Log In
+              </button>
+
+              <p className="text-sm text-center text-gray-300 mt-4">
+                Don’t have an account?{" "}
+                <a href="/registrations" className="text-blue-200 hover:underline">
+                  Sign up
+                </a>
+              </p>
+            </form>
           </div>
         </section>
       </main>

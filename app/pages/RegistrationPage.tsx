@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, addDoc } from "firebase/firestore";
-import { auth, firestore } from "../firebase"; 
-import Header from '../components/Header';
-import Footer from "../components/Footer"; 
+import { auth, firestore } from "../firebase";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
-import { Link } from "react-router-dom";
 export function RegistrationPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -47,7 +46,6 @@ export function RegistrationPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header */}
       <Header />
 
       <main className="flex-1 flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
@@ -108,7 +106,6 @@ export function RegistrationPage() {
         </form>
       </main>
 
-      {/* Footer */}
       <Footer />
     </div>
   );
