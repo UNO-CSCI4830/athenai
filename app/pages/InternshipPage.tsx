@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Filter, MapPin, Clock, Briefcase, Bell, Star } from 'lucide-react';
+import { Search, Filter, MapPin, Clock, Briefcase, Bell, Star, DollarSign } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -10,7 +10,8 @@ export default function InternshipPage() {
     industry: '',
     location: '',
     duration: '',
-    type: ''
+    type: '',
+    salary: ''
   });
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,7 +38,7 @@ export default function InternshipPage() {
     alert('Redirecting to post a new internship opportunity...');
   };
 
-  // Sample featured internships data
+  // Sample featured internships data with salaries
   const featuredInternships = [
     {
       id: 1,
@@ -47,6 +48,7 @@ export default function InternshipPage() {
       duration: '3 months',
       type: 'Full-time',
       industry: 'Artificial Intelligence',
+      salary: '$30-35/hr',
       description: 'Join our team working on cutting-edge AI research projects.',
       featured: true
     },
@@ -58,6 +60,7 @@ export default function InternshipPage() {
       duration: '6 months',
       type: 'Part-time',
       industry: 'Data Science',
+      salary: '$25-30/hr',
       description: 'Help our team analyze complex datasets and build predictive models.',
       featured: true
     },
@@ -69,12 +72,13 @@ export default function InternshipPage() {
       duration: '4 months',
       type: 'Full-time',
       industry: 'Machine Learning',
+      salary: '$28-32/hr',
       description: 'Develop and deploy machine learning models for real-world applications.',
       featured: true
     }
   ];
 
-  // Sample all internships data
+  // Sample all internships data with salaries and expanded industries
   const allInternships = [
     ...featuredInternships,
     {
@@ -85,6 +89,7 @@ export default function InternshipPage() {
       duration: '3 months',
       type: 'Part-time',
       industry: 'Web Development',
+      salary: '$22-26/hr',
       description: 'Create responsive and interactive web interfaces using modern frameworks.',
       featured: false
     },
@@ -96,6 +101,7 @@ export default function InternshipPage() {
       duration: '6 months',
       type: 'Full-time',
       industry: 'Design',
+      salary: '$24-28/hr',
       description: 'Design user-centered interfaces for web and mobile applications.',
       featured: false
     },
@@ -107,6 +113,7 @@ export default function InternshipPage() {
       duration: '4 months',
       type: 'Full-time',
       industry: 'Software Engineering',
+      salary: '$26-30/hr',
       description: 'Develop robust backend systems and APIs for our platform.',
       featured: false
     },
@@ -118,6 +125,7 @@ export default function InternshipPage() {
       duration: '3 months',
       type: 'Full-time',
       industry: 'Cybersecurity',
+      salary: '$28-32/hr',
       description: 'Help identify and fix security vulnerabilities in our systems.',
       featured: false
     },
@@ -129,7 +137,80 @@ export default function InternshipPage() {
       duration: '6 months',
       type: 'Part-time',
       industry: 'DevOps',
+      salary: '$25-30/hr',
       description: 'Automate deployment processes and manage cloud infrastructure.',
+      featured: false
+    },
+    {
+      id: 9,
+      title: 'Financial Analyst Intern',
+      company: 'CapitalGroup',
+      location: 'New York, NY',
+      duration: '3 months',
+      type: 'Full-time',
+      industry: 'Finance',
+      salary: '$24-28/hr',
+      description: 'Support the financial planning and analysis team with market research and data analysis.',
+      featured: false
+    },
+    {
+      id: 10,
+      title: 'Marketing Intern',
+      company: 'BrandWorks',
+      location: 'Chicago, IL',
+      duration: '4 months',
+      type: 'Part-time',
+      industry: 'Marketing',
+      salary: '$20-24/hr',
+      description: 'Assist with social media campaigns, content creation, and market research.',
+      featured: false
+    },
+    {
+      id: 11,
+      title: 'Legal Assistant Intern',
+      company: 'LawFirst',
+      location: 'Washington, DC',
+      duration: '6 months',
+      type: 'Full-time',
+      industry: 'Legal',
+      salary: '$22-26/hr',
+      description: 'Support attorneys with legal research, document preparation, and client communication.',
+      featured: false
+    },
+    {
+      id: 12,
+      title: 'Mechanical Engineering Intern',
+      company: 'EngineerTech',
+      location: 'Detroit, MI',
+      duration: '3 months',
+      type: 'Full-time',
+      industry: 'Engineering',
+      salary: '$26-30/hr',
+      description: 'Work on product design, testing, and improvement processes.',
+      featured: false
+    },
+    {
+      id: 13,
+      title: 'Healthcare Administration Intern',
+      company: 'MedCare Solutions',
+      location: 'Boston, MA',
+      duration: '4 months',
+      type: 'Part-time',
+      industry: 'Healthcare',
+      salary: '$22-25/hr',
+      description: 'Assist with administrative operations in a healthcare setting.',
+      featured: false
+    },
+    {
+      id: 14,
+      title: 'Business Analyst Intern',
+      company: 'BizConsulting',
+      location: 'San Francisco, CA',
+      duration: '6 months',
+      type: 'Full-time',
+      industry: 'Business',
+      salary: '$25-30/hr',
+      description: 'Help identify business needs and deliver data-driven recommendations and solutions.',
       featured: false
     }
   ];
@@ -145,8 +226,9 @@ export default function InternshipPage() {
     const matchesLocation = filters.location === '' || internship.location.includes(filters.location);
     const matchesDuration = filters.duration === '' || internship.duration === filters.duration;
     const matchesType = filters.type === '' || internship.type === filters.type;
+    const matchesSalary = filters.salary === '' || internship.salary.includes(filters.salary);
     
-    return matchesSearch && matchesIndustry && matchesLocation && matchesDuration && matchesType;
+    return matchesSearch && matchesIndustry && matchesLocation && matchesDuration && matchesType && matchesSalary;
   });
 
   // Get only featured internships from filtered results
@@ -184,7 +266,7 @@ export default function InternshipPage() {
           </div>
 
           {/* Filters */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Industry</label>
               <select
@@ -201,6 +283,12 @@ export default function InternshipPage() {
                 <option value="Software Engineering">Software Engineering</option>
                 <option value="Cybersecurity">Cybersecurity</option>
                 <option value="DevOps">DevOps</option>
+                <option value="Finance">Finance</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Legal">Legal</option>
+                <option value="Engineering">Engineering</option>
+                <option value="Healthcare">Healthcare</option>
+                <option value="Business">Business</option>
               </select>
             </div>
             <div>
@@ -219,6 +307,7 @@ export default function InternshipPage() {
                 <option value="Boston">Boston</option>
                 <option value="Washington">Washington DC</option>
                 <option value="Denver">Denver</option>
+                <option value="Detroit">Detroit</option>
               </select>
             </div>
             <div>
@@ -244,6 +333,19 @@ export default function InternshipPage() {
                 <option value="">All Types</option>
                 <option value="Full-time">Full-time</option>
                 <option value="Part-time">Part-time</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Salary Range</label>
+              <select
+                value={filters.salary}
+                onChange={(e) => handleFilterChange('salary', e.target.value)}
+                className="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option value="">Any Salary</option>
+                <option value="$20-24">$20-24/hr</option>
+                <option value="$25-30">$25-30/hr</option>
+                <option value="$30+">$30+/hr</option>
               </select>
             </div>
           </div>
@@ -275,9 +377,13 @@ export default function InternshipPage() {
                             <Clock className="h-4 w-4 mr-1" />
                             {internship.duration}
                           </div>
-                          <div className="flex items-center">
+                          <div className="flex items-center mr-4">
                             <Briefcase className="h-4 w-4 mr-1" />
                             {internship.type}
+                          </div>
+                          <div className="flex items-center">
+                            <DollarSign className="h-4 w-4 mr-1" />
+                            {internship.salary}
                           </div>
                         </div>
                         <p className="text-sm text-gray-600 mb-4">{internship.description}</p>
@@ -316,9 +422,13 @@ export default function InternshipPage() {
                             <Briefcase className="h-4 w-4 mr-1" />
                             {internship.type}
                           </div>
-                          <div className="flex items-center">
+                          <div className="flex items-center mr-4">
                             <Filter className="h-4 w-4 mr-1" />
                             {internship.industry}
+                          </div>
+                          <div className="flex items-center">
+                            <DollarSign className="h-4 w-4 mr-1" />
+                            {internship.salary}
                           </div>
                         </div>
                         <p className="text-sm text-gray-600 mb-4">{internship.description}</p>

@@ -8,8 +8,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
+    "@faker-js/faker": "^9.7.0",
     "firebase-admin": "^13.2.0"
-  }
+  },
+  "description": ""
 }

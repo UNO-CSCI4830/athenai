@@ -48,4 +48,58 @@ async function seedUsers() {
   console.log("✅ Users seeded successfully.");
 }
 
-seedUsers().catch(console.error);
+async function seedInternships() {
+  const internships = [
+    {
+      title: "AI Research Intern",
+      company: "TechVision Labs",
+      location: "San Francisco, CA",
+      duration: "3 months",
+      type: "Full-time",
+      description: "Join our team working on cutting-edge AI research projects.",
+      industry: "Artificial Intelligence",
+      postedAt: admin.firestore.Timestamp.now()
+    },
+    {
+      title: "Data Science Intern",
+      company: "DataCorp",
+      location: "New York, NY",
+      duration: "6 months",
+      type: "Part-time",
+      description: "Help our team analyze complex datasets and build predictive models.",
+      industry: "Data Science",
+      postedAt: admin.firestore.Timestamp.now()
+    },
+    {
+      title: "ML Engineering Intern",
+      company: "NeuralTech",
+      location: "Austin, TX",
+      duration: "4 months",
+      type: "Full-time",
+      description: "Develop and deploy machine learning models for real-world applications.",
+      industry: "Machine Learning",
+      postedAt: admin.firestore.Timestamp.now()
+    }
+  ];
+
+  const internshipsRef = db.collection("internships");
+
+  for (const internship of internships) {
+    await internshipsRef.add(internship);
+  }
+
+  console.log("✅ Internships seeded successfully.");
+}
+
+// Main function to run both seeders
+async function main() {
+  try {
+    await seedUsers();
+    await seedInternships();
+    console.log("🌱 All data seeded successfully!");
+  } catch (error) {
+    console.error("❌ Error seeding Firestore:", error);
+  }
+}
+
+main();
