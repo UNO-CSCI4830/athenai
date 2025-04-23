@@ -6,6 +6,7 @@ admin.initializeApp({
 });
 
 const db = admin.firestore();
+const { faker } = require("@faker-js/faker"); // make sure faker is installed
 
 async function seedUsers() {
   const users = [
@@ -49,46 +50,83 @@ async function seedUsers() {
 }
 
 async function seedInternships() {
-  const internships = [
-    {
-      title: "AI Research Intern",
-      company: "TechVision Labs",
-      location: "San Francisco, CA",
-      duration: "3 months",
-      type: "Full-time",
-      description: "Join our team working on cutting-edge AI research projects.",
-      industry: "Artificial Intelligence",
-      postedAt: admin.firestore.Timestamp.now()
-    },
-    {
-      title: "Data Science Intern",
-      company: "DataCorp",
-      location: "New York, NY",
-      duration: "6 months",
-      type: "Part-time",
-      description: "Help our team analyze complex datasets and build predictive models.",
-      industry: "Data Science",
-      postedAt: admin.firestore.Timestamp.now()
-    },
-    {
-      title: "ML Engineering Intern",
-      company: "NeuralTech",
-      location: "Austin, TX",
-      duration: "4 months",
-      type: "Full-time",
-      description: "Develop and deploy machine learning models for real-world applications.",
-      industry: "Machine Learning",
-      postedAt: admin.firestore.Timestamp.now()
-    }
+  // Industries for featured (tech/CS)
+  const techIndustries = [
+    "Artificial Intelligence",
+    "Data Science",
+    "Machine Learning",
+    "Software Engineering",
+    "Cybersecurity",
   ];
 
+  // Industries for the “All” section
+  const allIndustries = [
+    ...techIndustries,
+    "Law",
+    "Business",
+    "Finance",
+    "Marketing",
+    "Management",
+    "Mechanical Engineering",
+    "Electrical Engineering",
+    "Biology",
+  ];
+
+  // 5 Featured internships in San Jose, tech-focused
+  const featured = Array.from({ length: 5 }).map(() => ({
+    title: faker.helpers.arrayElement([
+      "AI Research Intern",
+      "Data Science Intern",
+      "ML Engineering Intern",
+      "Software Engineering Intern",
+      "Cybersecurity Intern",
+    ]),
+    company: faker.company.name(),
+    location: "San Jose, CA",
+    duration: `${faker.number.int({ min: 2, max: 6 })} months`,
+    type: faker.helpers.arrayElement(["Full‑time", "Part‑time"]),
+    description: faker.lorem.sentence(),
+    industry: faker.helpers.arrayElement(techIndustries),
+    salary: `$${faker.number.int({ min: 30, max: 60 })
+  }/hour`,
+    postedAt: admin.firestore.Timestamp.now(),
+    featured: true,
+  }));
+
+  // 10 General internships across fields & locations
+  const general = Array.from({ length: 10 }).map(() => ({
+    title: faker.helpers.arrayElement([
+      "Research Intern",
+      "Analyst Intern",
+      "Engineering Intern",
+      "Developer Intern",
+      "Consulting Intern",
+      "Management Intern",
+      "Legal Intern",
+      "Marketing Intern",
+    ]),
+    company: faker.company.name(),
+    location: `${faker.location.city()}, ${faker.location.state({ abbreviated: true })}`,
+    duration: `${faker.number.int({ min: 2, max: 6 })} months`,
+    type: faker.helpers.arrayElement(["Full‑time", "Part‑time"]),
+    description: faker.lorem.sentence(),
+    industry: faker.helpers.arrayElement(allIndustries),
+    salary: `$${faker.number.int({ min: 20, max: 80 })}/hour`,
+    postedAt: admin.firestore.Timestamp.now(),
+    featured: false,
+  }));
+
+  const internships = [...featured, ...general];
   const internshipsRef = db.collection("internships");
+  const batch = db.batch();
 
-  for (const internship of internships) {
-    await internshipsRef.add(internship);
-  }
+  internships.forEach((intern) => {
+    const docRef = internshipsRef.doc();
+    batch.set(docRef, intern);
+  });
 
-  console.log("✅ Internships seeded successfully.");
+  await batch.commit();
+  console.log("✅ 15 internships seeded (5 featured in San Jose, 10 general).");
 }
 
 // Main function to run both seeders
