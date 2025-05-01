@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+      "target": "ES6",
+      "module": "commonjs",
+      "jsx": "react-jsx",
+      "esModuleInterop": true,
+      "moduleResolution": "node",
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "strict": true
+    },
+    "include": ["**/*.ts", "**/*.tsx"]
+  }

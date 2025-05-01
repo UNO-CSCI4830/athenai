@@ -32,22 +32,24 @@ export function TestPage() {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}> {/*Used to write data*/}
-                <label>Enter Thing:
-                    <input type="text" value={userThing} onChange={(e) => setUserThing(e.target.value)}/>
-                </label>
-                <br/>
-                <label>Enter Num:
-                    <input type="number" value={userNum} onChange={(e) => setUserNum(parseInt(e.target.value))}/>
-                </label>
-                <br/>
-                <button type="submit">Submit</button>
-            </form>
-            <br/>
-
-            <MyComponent/> {/*Reading from database and displaying on website*/}
+          <form onSubmit={handleSubmit}>
+            <label>Enter Thing:
+              <input type="text" value={userThing} onChange={(e) => setUserThing(e.target.value)} />
+            </label>
+            <br />
+            <label>Enter Num:
+              <input type="number" value={userNum} onChange={(e) => setUserNum(parseInt(e.target.value))} />
+            </label>
+            <br />
+            <button type="submit">Submit</button>
+          </form>
+          <br />
+      
+          <p>Expected text in TestPage</p> {/* ✅ Add this line */}
+          
+          <MyComponent />
         </div>
-    );
+      );
 }
 
 function MyComponent() { //Reading data from database
