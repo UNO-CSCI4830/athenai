@@ -9,5 +9,11 @@ export default [
     route("/postings", "routes/internshipPostings.tsx"),
     route("/profile", "routes/profile.tsx"),
     route("/dashboard", "routes/userDashboard.tsx"),
-    route("/modules", "routes/modules.tsx")
+    route("/modules", "routes/modules.tsx"),
+
+    route("/registrations", "routes/registrations.tsx"),
+    route("/editProfile", "routes/editProfile.tsx"),
+    route("/changePassword", "routes/changePassword.tsx"),
+    
+
 ] satisfies RouteConfig;
