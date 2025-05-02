@@ -17,4 +17,8 @@ export default [
     route("/help", "routes/help.tsx"),
     route("/privacy", "routes/privacy.tsx"),
     route("/tos", "routes/tos.tsx"),
+    route("/registrations", "routes/registrations.tsx"),
+    route("/editProfile", "routes/editProfile.tsx"),
+    route("/changePassword", "routes/changePassword.tsx"),
+
 ] satisfies RouteConfig;
