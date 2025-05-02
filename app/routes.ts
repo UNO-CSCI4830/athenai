@@ -10,10 +10,15 @@ export default [
     route("/profile", "routes/profile.tsx"),
     route("/dashboard", "routes/userDashboard.tsx"),
     route("/modules", "routes/modules.tsx"),
-
+    route("/about", "routes/about.tsx"),
+    route("/contact", "routes/contact.tsx"),
+    route("/careers", "routes/careers.tsx"),
+    route("/blog", "routes/blog.tsx"),
+    route("/help", "routes/help.tsx"),
+    route("/privacy", "routes/privacy.tsx"),
+    route("/tos", "routes/tos.tsx"),
     route("/registrations", "routes/registrations.tsx"),
     route("/editProfile", "routes/editProfile.tsx"),
     route("/changePassword", "routes/changePassword.tsx"),
-    
 
 ] satisfies RouteConfig;
