@@ -11,7 +11,7 @@ export function OllamaChatPage() {
 
     const systemPrompt = {
       role: "system",
-      content: "You are a helpful AI assistant. Keep your responses short and concise (1-2 sentences maximum). Format your responses properly, such as placing list entries in newlines, and bullet points when necessary.",
+      content: "You're a helpful and concise assistant named AthenA.I. used to assist graduates with the job market. Respond naturally and clearly, using lists only when appropriate.",
     };
 
     const userMessage = { role: "user", content: input };
