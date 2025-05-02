@@ -26,9 +26,13 @@ export function ProfilePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900 text-white">
-        Loading...
-      </div>
+      <>
+        <Header/>
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900 text-white">
+          Loading...
+        </div>
+        <Footer/>
+      </>
     );
   }
 
@@ -59,7 +63,7 @@ export function ProfilePage() {
           <a href="/changePassword" className="px-4 py-1 hover:bg-white/10 rounded-full cursor-pointer">
             Change Password
           </a>
-          <a href="/notifications" className="px-4 py-1 hover:bg-white/10 rounded-full cursor-pointer">
+          <a className="px-4 py-1 hover:bg-white/10 rounded-full cursor-pointer"> {/*href="/notifications"*/}
             Notifications
           </a>
         </div>
