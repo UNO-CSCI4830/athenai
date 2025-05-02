@@ -11,7 +11,7 @@ export function OllamaChatPage() {
 
     const systemPrompt = {
       role: "system",
-      content: "You are a helpful AI assistant. Keep your responses short and concise (1-2 sentences maximum).",
+      content: "You are a helpful AI assistant. Keep your responses short and concise (1-2 sentences maximum). Format your responses properly, such as placing list entries in newlines, and bullet points when necessary.",
     };
 
     const userMessage = { role: "user", content: input };
@@ -30,9 +30,9 @@ export function OllamaChatPage() {
     setInput(""); // Clear input right away
 
     const body = {
-      model: "mistral", // or whatever model you want
+      model: "mistral", 
       messages: newMessages,
-      stream: false,  // Important to keep stream: false for now
+      stream: false,  
     };
 
     try {
@@ -76,10 +76,12 @@ export function OllamaChatPage() {
               {messages
                 .filter((msg) => msg.role !== "system") // 🛡️ SKIP system messages
                 .map((msg, idx) => (
-                    <div key={idx} className={`p-3 rounded-md ${
-                    msg.role === "user" ? "bg-blue-600 text-white" : "bg-gray-700 text-gray-200"
+                    <div key={idx} 
+                    className={`p-3 rounded-md ${
+                      msg.role === "user" ? "bg-blue-600 text-white" : "bg-gray-700 text-gray-200"
                     }`}>
-                    <strong>{msg.role === "user" ? "You" : "AthenA.I."}:</strong> {msg.content}
+                    <strong>{msg.role === "user" ? "You" : "AthenA.I."}:</strong>
+                    <pre className="whitespace-pre-wrap mt-1">{msg.content}</pre>
                     </div>
 ))}
 
