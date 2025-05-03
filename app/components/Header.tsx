@@ -1,3 +1,4 @@
+import type { User } from "firebase/auth";
 
 import { Link } from "react-router";
 import React, { useEffect, useState } from "react";
@@ -5,7 +6,7 @@ import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
 
 const Header = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);;
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
