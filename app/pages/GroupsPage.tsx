@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { PostCard }from '../components/PostCard';
-import groupBanner from '../assets/groupBanner.jpg'
-import groupImage from '../assets/athenaiLogo.jpg'
+import groupBanner from '../assets/groupBanner.jpg';
+import groupImage from '../assets/athenaiLogo.jpg';
 import Header from '../components/Header';
-import Footer from '~/components/Footer';
+import Footer from '../components/Footer';
 import { firestore } from "../firebase";
 import { doc, addDoc, setDoc, collection, getDocs } from "firebase/firestore";
-import { GroupCard } from '~/components/GroupCard';
+import { GroupCard } from '../components/GroupCard';
 
 interface GroupDataType {
   name:string,
@@ -42,11 +42,11 @@ export function GroupsPage() {
   if (loading) {
     return (
       <>
-        <Header/>
+        {/* <Header/> */}
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900 text-white">
           Loading...
         </div>
-        <Footer/>
+        {/* <Footer/> */}
       </>
     );
   }
@@ -55,7 +55,7 @@ export function GroupsPage() {
     <div className="min-h-screen flex font-sans text-white bg-gray-900">
       {/* Main Section */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        <Header />
+        {/* <Header /> */}
         {/* Group Banner */}
         <div
           className="h-48 bg-cover bg-center"
@@ -63,20 +63,8 @@ export function GroupsPage() {
         />
 
         {data.map((item, index) => <GroupCard key={item.name+index} docId={docIdArr[index]} name={item.name} description={item.description} groupPic={item.profilePic}/>)}
-
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </div>
-  );
-}
-
-
-function SidebarLink({ href, icon, label }: { href: string; icon: string; label: string }) {
-  return (
-    <li className="flex items-center gap-2 hover:translate-x-1 transition cursor-pointer">
-      <a href={href} className="flex items-center gap-2">
-        <span>{icon}</span> {label}
-      </a>
-    </li>
   );
 }
