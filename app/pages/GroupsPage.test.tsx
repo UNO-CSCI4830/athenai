@@ -21,13 +21,6 @@ jest.mock("firebase/firestore", () => {
   };
 });
 
-// jest.mock('firebase/firestore', () => ({
-//   getFirestore: jest.fn(() => ({ /* return a mocked Firestore instance */ })),
-//   collection: jest.fn(() => ({ name: "Test 1", description: " A group", profilePic: "uhh" })),
-// }));
-
-
-
 test("renders group data", async () => {
   // Setup fake Firestore data
   const mockGroups = [
@@ -40,12 +33,6 @@ test("renders group data", async () => {
   render(<MemoryRouter>
     <GroupsPage />
     </MemoryRouter>);
-  
-  //await new Promise(res => setTimeout(res, 4000));
-
-  //await waitFor(() => expect(screen.getByText("Test Group")).toBeInTheDocument(), { timeout: 2000 });
-  
-  //expect(screen.getByText("Test Group")).toBeInTheDocument();
 
 })
   
@@ -61,18 +48,6 @@ test('renders basic page', () => {
 });
 
 
-// test('loads and displays groups', async () => {
-//   await act(async () => {
-//     render(<MemoryRouter>
-//       <GroupsPage />
-//       </MemoryRouter>);
-//   });
-//   await waitFor(() => {
-//     expect(screen.getByText('Test Group')).toBeInTheDocument();
-//   });
-// });
-
-
 test("renders group data", async () => {
 
   render(<MemoryRouter>
@@ -82,4 +57,3 @@ test("renders group data", async () => {
   await waitFor(() => expect(screen.getByText("Thing")).toBeInTheDocument(), { timeout: 2000 });
 
 })
-
