@@ -1,18 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import groupImage from '../assets/athenaiLogo.jpg';
+import groupBanner from '../assets/groupBanner.jpg'
+import Header from '../components/Header';
+import Footer from '~/components/Footer';
+import { firestore } from "../firebase";
+import { doc, addDoc, setDoc, collection, getDocs } from "firebase/firestore";
 
-type PostCardProps = {
-  username: string;
-  degree: string;
-  content: string;
-  avatarColor?: string;
-};
+interface CommentsType {
+  name:string,
+  message:string
+}
+export function PostCard({docIds, username, content, avatarColor, degree}:{docIds:string[], username:string, content:string, avatarColor?:string, degree:string}) {
+    const [data, setData] = useState<CommentsType[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    useEffect(() => {
+      const fetchData = async () => {
+          const result = await getMyData();
+          setData(result);
+          setLoading(false);
+      };
+    fetchData();
+    
+  }, []);
 
-const PostCard: React.FC<PostCardProps> = ({
-  username,
-  degree,
-  content,
-  avatarColor = 'bg-black',
-}) => {
+  const getMyData = async (): Promise<CommentsType[]> => { //Used for reading from database
+    const myData: CommentsType[] = [];
+    const projectDocRef = doc(firestore, 'groups', docIds[0], 'posts', docIds[1]);
+    const collectionRef = collection(projectDocRef, 'comments');
+    const querySnapshot = await getDocs(collectionRef);
+    
+    querySnapshot.forEach((doc) => {
+      myData.push(doc.data() as CommentsType);
+    });
+    console.log(myData);
+    return myData;
+  };
+
+
   const [likes, setLikes] = useState(0);
   const [expanded, setExpanded] = useState(false);
 
@@ -62,10 +86,10 @@ const PostCard: React.FC<PostCardProps> = ({
 
       {/* Fake Replies */}
       <div className="mt-4 space-y-3 pl-6 text-sm text-gray-300">
-        {fakeReplies.map((reply, idx) => (
-          <div key={idx} className="border-l-2 border-gray-600 pl-4">
-            <p className="font-medium text-gray-200">{reply.user}</p>
-            <p>{reply.content}</p>
+        {data.map((item, index) => (
+          <div key={item.name+index} className="border-l-2 border-gray-600 pl-4">
+            <p className="font-medium text-gray-200">{item.name}</p>
+            <p>{item.message}</p>
           </div>
         ))}
       </div>
@@ -75,14 +99,3 @@ const PostCard: React.FC<PostCardProps> = ({
 
   );
 };
-const fakeReplies = [
-    {
-      user: 'Emily Zhang',
-      content: 'Congrats! Your group is killing it 💪',
-    },
-    {
-      user: 'Chris Nolan',
-      content: 'Mind sharing how you organized the project?',
-    },
-  ];
-export default PostCard;

@@ -1,11 +1,56 @@
-import React from 'react';
-import PostCard from '../components/PostCard';
+import React, { useEffect, useState } from 'react';
+import { PostCard }from '../components/PostCard';
 import groupBanner from '../assets/groupBanner.jpg'
 import groupImage from '../assets/athenaiLogo.jpg'
 import Header from '../components/Header';
 import Footer from '~/components/Footer';
+import { firestore } from "../firebase";
+import { doc, addDoc, setDoc, collection, getDocs } from "firebase/firestore";
+import { GroupCard } from '~/components/GroupCard';
+
+interface GroupDataType {
+  name:string,
+  description:string,
+  profilePic:string
+}
 
 export function GroupsPage() {
+  const [data, setData] = useState<GroupDataType[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [docIdArr, setDocIdArr] = useState<string[]>([]);
+
+  useEffect(() => {
+      const fetchData = async () => {
+          const result = await getMyData();
+          setData(result);
+          setLoading(false);
+      };
+    fetchData();
+    
+  }, []);
+
+  const getMyData = async (): Promise<GroupDataType[]> => { //Used for reading from database
+    const myData: GroupDataType[] = [];
+    const querySnapshot = await getDocs(collection(firestore, "groups"));
+    querySnapshot.forEach((doc) => {
+      myData.push(doc.data() as GroupDataType);
+      docIdArr.push(doc.id as string);
+    });
+    return myData;  
+  };
+
+  if (loading) {
+    return (
+      <>
+        <Header/>
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900 text-white">
+          Loading...
+        </div>
+        <Footer/>
+      </>
+    );
+  }
+
   return (
     <div className="min-h-screen flex font-sans text-white bg-gray-900">
       {/* Main Section */}
@@ -15,45 +60,10 @@ export function GroupsPage() {
         <div
           className="h-48 bg-cover bg-center"
           style={{ backgroundImage: `url(${groupBanner})` }}
-        ></div>
-
-        {/* Group Info (Below Banner) */}
-        <div className="bg-gray-800 px-10 py-6 border-b border-gray-700 flex items-center gap-6">
-        <img
-            src={groupImage}
-            alt="Group Icon"
-            className="w-24 h-24 rounded-full object-cover border border-gray-500"
         />
-          <div>
-            <h1 className="text-3xl font-bold justify-center">AthenA.I.</h1>
-            <p className="text-sm text-gray-300 justify-center">A group for the developers of AthenA.I.</p>
-          </div>
-        </div>
 
-        {/* Posts Section (Scrollable) */}
-        <main className="flex-1 overflow-y-auto px-10 py-8 flex flex-col items-center">
-          <div className="space-y-6 w-full max-w-2xl">
-            <PostCard
-              username="Alex Johnson"
-              degree="Computer Science"
-              content="Just finished our group project milestone! 🎉"
-              avatarColor="bg-blue-600"
-            />
-            <PostCard
-              username="Maria Lopez"
-              degree="Psychology"
-              content="Anyone up for a study session this weekend?"
-              avatarColor="bg-pink-600"
-            />
-            <PostCard
-              username="David Kim"
-              degree="Mechanical Engineering"
-              content="Shared some resources on fluid dynamics in the group files."
-              avatarColor="bg-green-600"
-            />
-            {/* Add more posts here */}
-          </div>
-        </main>
+        {data.map((item, index) => <GroupCard key={item.name+index} docId={docIdArr[index]} name={item.name} description={item.description} groupPic={item.profilePic}/>)}
+
         <Footer />
       </div>
     </div>
@@ -62,11 +72,11 @@ export function GroupsPage() {
 
 
 function SidebarLink({ href, icon, label }: { href: string; icon: string; label: string }) {
-    return (
-      <li className="flex items-center gap-2 hover:translate-x-1 transition cursor-pointer">
-        <a href={href} className="flex items-center gap-2">
-          <span>{icon}</span> {label}
-        </a>
-      </li>
-    );
-  }
+  return (
+    <li className="flex items-center gap-2 hover:translate-x-1 transition cursor-pointer">
+      <a href={href} className="flex items-center gap-2">
+        <span>{icon}</span> {label}
+      </a>
+    </li>
+  );
+}
