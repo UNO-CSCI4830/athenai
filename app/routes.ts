@@ -4,7 +4,7 @@ import { type RouteConfig, index, route } from "@react-router/dev/routes";
 //^ starting code, I'm not sure what index() does yet
 export default [
     route("/", "routes/landing.tsx"), 
-    route("/test", "routes/test.tsx"),
+    //route("/test", "routes/test.tsx"),
     route("/groups", "routes/groups.tsx"),
     route("/postings", "routes/internshipPostings.tsx"),
     route("/profile", "routes/profile.tsx"),

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import Header from '../components/Header';
-import Footer from '~/components/Footer';
+import Footer from '../components/Footer';
 
 export function OllamaChatPage() {
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState([]);
+  type Message = { role: string; content: string };
+  const [messages, setMessages] = useState<Message[]>([]);
+
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -91,7 +93,7 @@ export function OllamaChatPage() {
             <div className="flex w-full gap-2">
               <textarea
                 className="flex-1 p-3 border rounded-md bg-gray-800 text-white resize-none"
-                rows="2"
+                rows={2}
                 placeholder="Enter your message..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
