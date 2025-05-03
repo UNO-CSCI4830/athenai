@@ -1,6 +1,7 @@
+
 import { useEffect, useState } from "react";
 import { auth, firestore } from "../firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { FaEnvelope, FaPhoneAlt, FaLink } from "react-icons/fa";
@@ -8,6 +9,7 @@ import { FaEnvelope, FaPhoneAlt, FaLink } from "react-icons/fa";
 export function ProfilePage() {
   const [profileData, setProfileData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [degree, setDegree] = useState("");
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -15,7 +17,9 @@ export function ProfilePage() {
         const profileRef = doc(firestore, "users", user.uid);
         const profileSnap = await getDoc(profileRef);
         if (profileSnap.exists()) {
-          setProfileData(profileSnap.data());
+          const data = profileSnap.data();
+          setProfileData(data);
+          setDegree(data.degree || "");
         }
         setLoading(false);
       }
@@ -23,6 +27,17 @@ export function ProfilePage() {
 
     return () => unsubscribe();
   }, []);
+
+  const handleDegreeChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newDegree = e.target.value;
+    setDegree(newDegree);
+
+    const user = auth.currentUser;
+    if (user) {
+      const profileRef = doc(firestore, "users", user.uid);
+      await updateDoc(profileRef, { degree: newDegree });
+    }
+  };
 
   if (loading) {
     return (
@@ -54,16 +69,14 @@ export function ProfilePage() {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white font-sans flex flex-col">
       <Header />
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10 max-w-screen-xl mx-auto w-full">
-        {/* Top Tabs */}
         <div className="flex gap-6 text-sm">
-        
           <a href="/editProfile" className="px-4 py-1 bg-white/10 backdrop-blur-md rounded-full hover:bg-white/20">
             Edit Profile
           </a>
           <a href="/changePassword" className="px-4 py-1 hover:bg-white/10 rounded-full cursor-pointer">
             Change Password
           </a>
-          <a className="px-4 py-1 hover:bg-white/10 rounded-full cursor-pointer"> {/*href="/notifications"*/}
+          <a className="px-4 py-1 hover:bg-white/10 rounded-full cursor-pointer">
             Notifications
           </a>
         </div>
@@ -80,6 +93,23 @@ export function ProfilePage() {
           <div>
             <h3 className="text-3xl font-semibold">{profileData.name || "Unnamed User"}</h3>
           </div>
+        </div>
+
+        {/* Degree Dropdown */}
+        <div className="backdrop-blur-md bg-white/10 border border-white/10 p-6 rounded-lg">
+          <label className="block mb-2 text-sm font-medium text-white">Degree Program</label>
+          <select
+            value={degree}
+            onChange={handleDegreeChange}
+            className="w-full p-2 rounded bg-gray-700 text-white"
+          >
+            <option value="">Select your degree</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Software Engineering">Software Engineering</option>
+            <option value="Cybersecurity">Cybersecurity</option>
+            <option value="Business Analytics">Business Analytics</option>
+            <option value="Information Systems">Information Systems</option>
+          </select>
         </div>
 
         {/* About Me */}
@@ -129,7 +159,6 @@ export function ProfilePage() {
           </div>
         </div>
 
-        {/* Progress Tracker */}
         <div className="backdrop-blur-md bg-white/10 border border-white/10 p-6 rounded-lg mt-8">
           <h2 className="text-2xl font-semibold mb-6">Progress Tracker</h2>
           <div className="w-full bg-gray-700 rounded-full h-4">
@@ -138,7 +167,6 @@ export function ProfilePage() {
           <p className="text-sm text-gray-300 mt-2">75% Complete</p>
         </div>
       </main>
-
       <Footer />
     </div>
   );
