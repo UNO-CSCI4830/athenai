@@ -29,15 +29,7 @@ export function LearningModules() {
     return () => unsubscribe();
   }, []);
 
-  if (!profileData || !profileData.degree) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
-        Loading modules...
-      </div>
-    );
-  }
-
-  const degree = profileData.degree;
+  const degree = profileData?.degree || "professional development";
   const linkedInLink = `https://www.linkedin.com/learning/search?keywords=${encodeURIComponent(degree)}`;
   const courseraLink = `https://www.coursera.org/search?query=${encodeURIComponent(degree)}&index=prod_all_products_term_optimization`;
 
@@ -62,12 +54,13 @@ export function LearningModules() {
       keywords: ["Database Management", "ERP Systems", "Cloud Computing"],
       projects: ["Design a Relational Database", "Create a CRM Workflow", "Migrate a Website to AWS"],
     },
+    "professional development": {
+      keywords: ["Problem Solving", "Critical Thinking"],
+      projects: ["Watch LinkedIn Learning videos", "Explore Coursera courses", "Polish your resume with tips"],
+    },
   };
 
-  const selectedProject = projectSuggestions[degree] || {
-    keywords: ["Problem Solving", "Critical Thinking"],
-    projects: ["Build any capstone project", "Volunteer for tech initiatives"],
-  };
+  const selectedProject = projectSuggestions[degree];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white font-sans flex flex-col">
