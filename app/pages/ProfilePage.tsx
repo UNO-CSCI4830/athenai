@@ -1,111 +1,164 @@
-import { FaLink, FaPhoneAlt, FaEnvelope} from "react-icons/fa";
-import profilePic from "..//assets/profilePic.png";
+
+import { useEffect, useState } from "react";
+import { auth, firestore } from "../firebase";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import Header from "../components/Header";
-import Footer from "~/components/Footer";
+import Footer from "../components/Footer";
+import { FaEnvelope, FaPhoneAlt, FaLink } from "react-icons/fa";
 
 export function ProfilePage() {
+  const [profileData, setProfileData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [degree, setDegree] = useState("");
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        const profileRef = doc(firestore, "users", user.uid);
+        const profileSnap = await getDoc(profileRef);
+        if (profileSnap.exists()) {
+          const data = profileSnap.data();
+          setProfileData(data);
+          setDegree(data.degree || "");
+        }
+        setLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleDegreeChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newDegree = e.target.value;
+    setDegree(newDegree);
+
+    const user = auth.currentUser;
+    if (user) {
+      const profileRef = doc(firestore, "users", user.uid);
+      await updateDoc(profileRef, { degree: newDegree });
+    }
+  };
+
+  if (loading) {
+    return (
+      <>
+        <Header/>
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900 text-white">
+          Loading...
+        </div>
+        <Footer/>
+      </>
+    );
+  }
+
+  if (!profileData) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900 text-white text-center space-y-6">
+        <p>No profile data found.</p>
+        <a
+          href="/editProfile"
+          className="px-5 py-2 bg-blue-500 hover:bg-blue-600 rounded text-white"
+        >
+          Create Your Profile
+        </a>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white font-sans flex flex-col">
       <Header />
-
-      {/* Main Content */}
-      <main className="flex-1 p-10 space-y-10">
-        {/* Top Tabs */}
+      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10 max-w-screen-xl mx-auto w-full">
         <div className="flex gap-6 text-sm">
-          <div className="px-4 py-1 bg-white/10 backdrop-blur-md rounded-full text-white">Edit Profile</div>
-          <div className="px-4 py-1 hover:bg-white/10 rounded-full cursor-pointer">Change Password</div>
-          <div className="px-4 py-1 hover:bg-white/10 rounded-full cursor-pointer">Notifications</div>
+          <a href="/editProfile" className="px-4 py-1 bg-white/10 backdrop-blur-md rounded-full hover:bg-white/20">
+            Edit Profile
+          </a>
+          <a href="/changePassword" className="px-4 py-1 hover:bg-white/10 rounded-full cursor-pointer">
+            Change Password
+          </a>
+          <a className="px-4 py-1 hover:bg-white/10 rounded-full cursor-pointer">
+            Notifications
+          </a>
         </div>
 
         {/* Profile Picture Section */}
         <div className="flex items-center space-x-4 mb-8">
-          {/* Profile Picture */}
           <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-white">
             <img
-              src={profilePic}
-              alt="Profile Picture"
+              src={profileData.profilePic || "/default-avatar.png"}
+              alt="Profile"
               className="w-full h-full object-cover"
             />
           </div>
           <div>
-            <h3 className="text-3xl font-semibold">John Doe</h3>
-            <p className="text-lg text-gray-200">Frontend Developer at XYZ Corp</p>
+            <h3 className="text-3xl font-semibold">{profileData.name || "Unnamed User"}</h3>
           </div>
         </div>
 
-        {/* About Section */}
+        {/* Degree Dropdown */}
         <div className="backdrop-blur-md bg-white/10 border border-white/10 p-6 rounded-lg">
-          <h2 className="text-2xl font-semibold mb-6">About Me</h2>
+          <label className="block mb-2 text-sm font-medium text-white">Degree Program</label>
+          <select
+            value={degree}
+            onChange={handleDegreeChange}
+            className="w-full p-2 rounded bg-gray-700 text-white"
+          >
+            <option value="">Select your degree</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Software Engineering">Software Engineering</option>
+            <option value="Cybersecurity">Cybersecurity</option>
+            <option value="Business Analytics">Business Analytics</option>
+            <option value="Information Systems">Information Systems</option>
+          </select>
+        </div>
+
+        {/* About Me */}
+        <div className="backdrop-blur-md bg-white/10 border border-white/10 p-6 rounded-lg">
+          <h2 className="text-2xl font-semibold mb-4">About Me</h2>
           <p className="text-sm text-gray-300">
-            A passionate software developer with expertise in frontend development, especially React and TypeScript. Enthusiastic about building scalable, high-performance applications that improve user experiences.
+            {profileData.bio || "This user hasn't written anything about themselves yet."}
           </p>
         </div>
 
-        {/* Sections Below About Me - Two Panels */}
+        {/* Education & Work */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-          {/* Education Section */}
-          <div className="backdrop-blur-md bg-white/10 border border-white/10 p-6 rounded-lg">
-            <h2 className="text-2xl font-semibold mb-6">Education</h2>
-            <div className="space-y-4">
-              <div className="text-sm text-gray-200">
-                <h4 className="font-semibold">Bachelor of Computer Science</h4>
-                <p className="text-gray-400">University of Nebraska-Omaha - 2018</p>
-              </div>
-              <div className="text-sm text-gray-200">
-                <h4 className="font-semibold">Master of Software Engineering</h4>
-                <p className="text-gray-400">University of Nebraska-Omaha - 2022</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Work Experience Section */}
-          <div className="backdrop-blur-md bg-white/10 border border-white/10 p-6 rounded-lg">
-            <h2 className="text-2xl font-semibold mb-6">Work Experience</h2>
-            <div className="space-y-4">
-              <div className="text-sm text-gray-200">
-                <h4 className="font-semibold">Frontend Developer</h4>
-                <p className="text-gray-400">XYZ Corp - 2021 to Present</p>
-                <p className="text-gray-300">Building interactive UIs using React, Redux, and Tailwind CSS.</p>
-              </div>
-              <div className="text-sm text-gray-200">
-                <h4 className="font-semibold">Junior Developer</h4>
-                <p className="text-gray-400">ABC Solutions - 2019 to 2021</p>
-                <p className="text-gray-300">Developed internal tools using Angular and Node.js for improved workflow.</p>
-              </div>
-            </div>
-          </div>
+          <SectionCard title="Education" content={profileData.education} />
+          <SectionCard title="Work Experience" content={profileData.work} />
         </div>
 
-        {/* Sections Below About Me - Two Panels */}
+        {/* Skills & Contact Info */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-          {/* Skills Section */}
           <div className="backdrop-blur-md bg-white/10 border border-white/10 p-6 rounded-lg">
             <h2 className="text-2xl font-semibold mb-6">Skills</h2>
-            <ul className="text-sm text-gray-200 space-y-2">
-              <li>React, TypeScript</li>
-              <li>HTML, CSS</li>
-              <li>Node.js, Express</li>
+            <ul className="text-sm text-gray-200 space-y-2 list-disc list-inside">
+              {(profileData.skills || "").split(",").map((skill: string, i: number) => (
+                <li key={i}>{skill.trim()}</li>
+              ))}
             </ul>
           </div>
 
-          {/* Contact Info Section */}
           <div className="backdrop-blur-md bg-white/10 border border-white/10 p-6 rounded-lg">
             <h2 className="text-2xl font-semibold mb-6">Contact Info</h2>
             <div className="space-y-4 text-sm text-gray-200">
-              <div className="flex items-center gap-2">
-                <FaEnvelope /> <span>johndoe@example.com</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <FaPhoneAlt /> <span>(123) 456-7890</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <FaLink /> <span>www.johndoeportfolio.com</span>
-              </div>
+              {profileData.email && (
+                <div className="flex items-center gap-2">
+                  <FaEnvelope /> <span>{profileData.email}</span>
+                </div>
+              )}
+              {profileData.phone && (
+                <div className="flex items-center gap-2">
+                  <FaPhoneAlt /> <span>{profileData.phone}</span>
+                </div>
+              )}
+              {profileData.website && (
+                <div className="flex items-center gap-2">
+                  <FaLink /> <span>{profileData.website}</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Progress Tracker Section */}
         <div className="backdrop-blur-md bg-white/10 border border-white/10 p-6 rounded-lg mt-8">
           <h2 className="text-2xl font-semibold mb-6">Progress Tracker</h2>
           <div className="w-full bg-gray-700 rounded-full h-4">
@@ -119,25 +172,13 @@ export function ProfilePage() {
   );
 }
 
-// 💠 Profile Card
-function ProfileCard({ icon, color, title }: { icon: React.ReactNode; color: string; title: string }) {
+function SectionCard({ title, content }: { title: string; content?: string }) {
   return (
-    <div
-      className={`flex items-center gap-4 p-4 rounded-lg ${color} backdrop-blur-sm border border-white/10 hover:scale-[1.02] transition cursor-pointer`}
-    >
-      <div className="text-2xl">{icon}</div>
-      <h4 className="text-lg font-semibold">{title}</h4>
+    <div className="backdrop-blur-md bg-white/10 border border-white/10 p-6 rounded-lg">
+      <h2 className="text-2xl font-semibold mb-4">{title}</h2>
+      <p className="text-sm text-gray-300">
+        {content || `No ${title.toLowerCase()} information provided.`}
+      </p>
     </div>
-  );
-}
-
-// 🧭 Sidebar Link
-function SidebarLink({ href, icon, label }: { href: string; icon: string; label: string }) {
-  return (
-    <li className="flex items-center gap-2 hover:translate-x-1 transition cursor-pointer">
-      <a href={href} className="flex items-center gap-2">
-        <span>{icon}</span> {label}
-      </a>
-    </li>
   );
 }
