@@ -1,48 +1,15 @@
 import Header from "../components/Header";
 import Footer from "~/components/Footer";
-import { useEffect, useState } from "react";
-import { collection, limit, query, where, orderBy } from "firebase/firestore";
-import { firestore } from "../firebase";
-import { getDocs } from "firebase/firestore";
-
+import { useState } from "react";
 
 export function UserDashboardPage() {
-    const [featuredInternships, setFeaturedInternships] = useState([]);
-    const [modules, setModules] = useState([]);
 
-    useEffect(() => {
-        const fetchFeaturedInternships = async () => {
-            const internshipsRef = collection(firestore, "internships");
-            const q = query(internshipsRef, where("category", "==", "Featured"));
-    
-            try {
-                const querySnapshot = await getDocs(q);
-                const internshipsData = querySnapshot.docs.map(doc => doc.data());
-                setFeaturedInternships(internshipsData);
-            } catch (error) {
-                console.error("Error fetching internships: ", error);
-            }
-        };
-    
-        fetchFeaturedInternships();
-    }, []);
+    const [file, setFile] = useState<File | null>(null);
 
-    useEffect(() => {
-        const fetchModules = async () => {
-            const modulesRef = collection(firestore, "modules");
-            const q = query(modulesRef, where("progress", "!=", ""), orderBy("progress", "desc"), limit(4));
-    
-            try {
-                const querySnapshot = await getDocs(q);
-                const modulesData = querySnapshot.docs.map(doc => doc.data());
-                setModules(modulesData);
-            } catch (error) {
-                console.error("Error fetching modules: ", error);
-            }
-        };
-    
-        fetchModules();
-    }, []);
+    const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const uploadedFile = e.target.files ? e.target.files[0] : null;
+        setFile(uploadedFile);
+      };
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white font-sans flex flex-col">
@@ -52,6 +19,37 @@ export function UserDashboardPage() {
         <main className="flex-1 p-10 space-y-10">
             {/* Resume, Community Boards, and Profile Sections */}
             <div className="grid grid-cols-3 md:grid-cols-3 gap-4 mt-8">
+                {/* Resume Section */}
+                <div className="backdrop-blur-md bg-white/10 border border-white/10 p-4 rounded-md flex items-center justify-between">
+                    <h2 className="text-2xl font-semibold mb-0">Resume Builder</h2>
+                    <div className="flex gap-4">
+                    <a
+                        href="/resumeBuilder"
+                        className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition"
+                    >
+                        Edit
+                    </a>
+
+                    {/* Upload Button - Trigger File Upload */}
+                    <label
+                        htmlFor="resume-upload"
+                        className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition cursor-pointer"
+                    >
+                        Upload
+                    </label>
+                    <input
+                        id="resume-upload"
+                        type="file"
+                        className="hidden"
+                        onChange={handleFileUpload}
+                    />
+                    {file && (
+                        <span className="text-sm text-gray-200">
+                        Uploaded: {file.name}
+                        </span>
+                    )}
+                    </div>
+                </div>
                 {/* Community Boards Section */}
                 <div className="backdrop-blur-md bg-white/10 border border-white/10 p-4 rounded-md flex items-center justify-between">
                     {/* Community Boards Title */}
