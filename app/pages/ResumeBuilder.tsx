@@ -55,7 +55,7 @@ export function ResumeBuilder() {
     skills: "",
     profilePic: "",
   });
-  
+
   const [resume, setResume] = useState<ResumeData>({
     resumeName: "",
     resumeBio: "",
@@ -63,7 +63,7 @@ export function ResumeBuilder() {
     resumeWork: "",
     resumeSkills: "",
   });
-  
+
   const [font, setFont] = useState("Times New Roman");
   const [loading, setLoading] = useState(true);
   const [suggestedSkills, setSuggestedSkills] = useState<string[]>([]);
@@ -77,7 +77,6 @@ export function ResumeBuilder() {
         if (profileSnap.exists()) {
           const profileData = profileSnap.data() as Profile;
           setProfile(profileData);
-          // Initialize resume with profile data but keep them separate
           setResume({
             resumeName: profileData.name || "",
             resumeBio: profileData.bio || "",
@@ -97,8 +96,8 @@ export function ResumeBuilder() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setResume((prevResume) => ({
-      ...prevResume,
+    setResume((prev) => ({
+      ...prev,
       [name]: value,
     }));
   };
@@ -129,14 +128,14 @@ export function ResumeBuilder() {
     doc.setFontSize(16);
     doc.text("Education", marginLeft, marginTop + 8 * lineHeight);
     doc.setFontSize(12);
-    doc.text(resume.resumeEducation || profile.education || "No education info provided.", 
-            marginLeft, marginTop + 9 * lineHeight, { maxWidth: 170 });
+    doc.text(resume.resumeEducation || profile.education || "No education info provided.",
+      marginLeft, marginTop + 9 * lineHeight, { maxWidth: 170 });
 
     doc.setFontSize(16);
     doc.text("Work Experience", marginLeft, marginTop + 11 * lineHeight);
     doc.setFontSize(12);
-    doc.text(resume.resumeWork || profile.work || "No work experience provided.", 
-            marginLeft, marginTop + 12 * lineHeight, { maxWidth: 170 });
+    doc.text(resume.resumeWork || profile.work || "No work experience provided.",
+      marginLeft, marginTop + 12 * lineHeight, { maxWidth: 170 });
 
     doc.setFontSize(16);
     doc.text("Skills", marginLeft, marginTop + 14 * lineHeight);
@@ -161,12 +160,11 @@ export function ResumeBuilder() {
   };
 
   const handleSaveChanges = async () => {
-    // Save only the resume data separately from profile
     const user = auth.currentUser;
     if (user) {
       const profileRef = doc(firestore, "users", user.uid);
       await updateDoc(profileRef, {
-        resumeData: {  // Store resume data in a separate field
+        resumeData: {
           name: resume.resumeName,
           bio: resume.resumeBio,
           education: resume.resumeEducation,
@@ -178,23 +176,24 @@ export function ResumeBuilder() {
   };
 
   const handleLoadProfileData = async () => {
+    setLoading(true);
     const user = auth.currentUser;
     if (user) {
       const profileRef = doc(firestore, "users", user.uid);
       const profileSnap = await getDoc(profileRef);
       if (profileSnap.exists()) {
-        const data = profileSnap.data() as Profile & { resumeData?: ResumeData };
-        setProfile(data);
-        // Load resume data if it exists, otherwise use profile data
-        setResume(data.resumeData || {
-          resumeName: data.name || "",
-          resumeBio: data.bio || "",
-          resumeEducation: data.education || "",
-          resumeWork: data.work || "",
-          resumeSkills: data.skills || "",
+        const profileData = profileSnap.data() as Profile;
+        setProfile(profileData);
+        setResume({
+          resumeName: profileData.name || "",
+          resumeBio: profileData.bio || "",
+          resumeEducation: profileData.education || "",
+          resumeWork: profileData.work || "",
+          resumeSkills: profileData.skills || "",
         });
       }
     }
+    setLoading(false);
   };
 
   const handleSkillInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -204,6 +203,13 @@ export function ResumeBuilder() {
       skill.toLowerCase().includes(value.toLowerCase())
     );
     setSuggestedSkills(filtered);
+  };
+
+  const handleSkillKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleAddCustomSkill();
+    }
   };
 
   const handleSkillSelect = (skill: string) => {
@@ -221,14 +227,7 @@ export function ResumeBuilder() {
   const handleAddCustomSkill = () => {
     const skill = skillInput.trim();
     if (skill) {
-      const existingSkills = resume.resumeSkills ? resume.resumeSkills.split(",").map(s => s.trim()) : [];
-      if (!existingSkills.includes(skill)) {
-        setResume((prev) => ({
-          ...prev,
-          resumeSkills: [...existingSkills, skill].join(", ")
-        }));
-      }
-      setSkillInput("");
+      handleSkillSelect(skill);
     }
   };
 
@@ -273,6 +272,7 @@ export function ResumeBuilder() {
           <button onClick={generatePDF} className="px-4 py-2 bg-green-500 rounded-full text-white hover:bg-green-600">Download Resume</button>
           <button onClick={createBlankResume} className="px-4 py-2 bg-yellow-500 rounded-full text-white hover:bg-yellow-600">Create New Resume</button>
           <button onClick={handleLoadProfileData} className="px-4 py-2 bg-blue-500 rounded-full text-white hover:bg-blue-600">Load Profile Data</button>
+          <button onClick={handleSaveChanges} className="px-4 py-2 bg-red-500 rounded-full text-white hover:bg-red-600">Save Resume</button>
         </div>
 
         <div className="max-w-3xl mx-auto p-8 bg-white text-black font-serif shadow-lg rounded-md">
@@ -308,81 +308,64 @@ export function ResumeBuilder() {
               name="resumeEducation" 
               value={resume.resumeEducation} 
               onChange={handleChange} 
-              placeholder={profile.education || "Enter your education details"}
-              className="w-full px-4 py-2 border-2 border-gray-300 rounded-md" 
-            />
-            <button onClick={() => addBulletPoint("resumeEducation")} className="mt-2 px-4 py-2 bg-blue-500 rounded-full text-white">Add Bullet Point</button>
+              placeholder={profile.education || "Your education details."} 
+              className="w-full px-4 py-2 border-2 border-gray-300 rounded-md"
+            ></textarea>
           </div>
 
-          {/* Work */}
+          {/* Work Experience */}
           <div className="mb-6">
             <h2 className="text-xl font-semibold mb-2">Work Experience</h2>
             <textarea 
               name="resumeWork" 
               value={resume.resumeWork} 
               onChange={handleChange} 
-              placeholder={profile.work || "Enter your work experience"}
-              className="w-full px-4 py-2 border-2 border-gray-300 rounded-md" 
-            />
-            <button onClick={() => addBulletPoint("resumeWork")} className="mt-2 px-4 py-2 bg-blue-500 rounded-full text-white">Add Bullet Point</button>
+              placeholder={profile.work || "Your work experience."} 
+              className="w-full px-4 py-2 border-2 border-gray-300 rounded-md"
+            ></textarea>
           </div>
 
-          {/* Skills Section */}
+          {/* Skills */}
           <div className="mb-6">
-            <label className="block mb-2 text-sm font-medium">Skills</label>
-            <input
-              type="text"
-              value={skillInput}
-              onChange={handleSkillInputChange}
+            <h2 className="text-xl font-semibold mb-2">Skills</h2>
+
+            <input 
+              type="text" 
+              value={skillInput} 
+              onChange={handleSkillInputChange} 
+              onKeyDown={handleSkillKeyDown}
+              placeholder="Search or add custom skill"
               className="w-full px-4 py-2 border-2 border-gray-300 rounded-md"
-              placeholder="Enter your skills..."
             />
-            {suggestedSkills.length > 0 && (
-              <div className="mt-2 bg-white border-2 border-gray-300 rounded-md max-h-40 overflow-auto">
-                {suggestedSkills.map((skill) => (
-                  <div key={skill} onClick={() => handleSkillSelect(skill)} className="cursor-pointer p-2 hover:bg-gray-100">
-                    {skill}
-                  </div>
-                ))}
-              </div>
-            )}
-            <button onClick={handleAddCustomSkill} className="mt-2 px-4 py-2 bg-blue-500 rounded-full text-white">Add Custom Skill</button>
 
-            {resume.resumeSkills && (
-              <div className="mt-4 flex flex-wrap gap-2">
-                {resume.resumeSkills.split(",").map((skill) => {
-                  const trimmed = skill.trim();
-                  return (
-                    <div key={trimmed} className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full flex items-center space-x-2">
-                      <span>{trimmed}</span>
-                      <button onClick={() => handleRemoveSkill(trimmed)} className="text-red-600 font-bold">×</button>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-
-          {/* Font Selector */}
-          <div className="mb-6">
-            <label className="block mb-2 text-sm font-medium">Choose Font</label>
-            <select
-              value={font}
-              onChange={(e) => setFont(e.target.value)}
-              className="w-full px-4 py-2 border-2 border-gray-300 rounded-md"
-            >
-              {availableFonts.map((fontName) => (
-                <option key={fontName} value={fontName}>
-                  {fontName}
-                </option>
+            <div className="mt-2 space-y-2">
+              {suggestedSkills.map((skill, idx) => (
+                <div 
+                  key={idx} 
+                  className="cursor-pointer hover:underline" 
+                  onClick={() => handleSkillSelect(skill)}
+                >
+                  {skill}
+                </div>
               ))}
-            </select>
-            <div className="mt-2 text-sm text-gray-700" style={{ fontFamily: font }}>
-              Preview: <span className="font-semibold">{font}</span>
+            </div>
+
+            <button 
+              onClick={handleAddCustomSkill} 
+              className="mt-4 px-4 py-2 bg-blue-500 rounded-full text-white hover:bg-blue-600"
+            >
+              Add Custom Skill
+            </button>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              {resume.resumeSkills.split(",").map((skill, idx) => (
+                <div key={idx} className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center">
+                  {skill}
+                  <button onClick={() => handleRemoveSkill(skill)} className="ml-2 text-red-200">X</button>
+                </div>
+              ))}
             </div>
           </div>
-
-          <button onClick={handleSaveChanges} className="px-4 py-2 bg-blue-500 rounded-full text-white hover:bg-blue-600">Save Resume</button>
         </div>
       </main>
 
