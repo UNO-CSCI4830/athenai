@@ -76,8 +76,8 @@ export function ProfilePage() {
           <a href="/changePassword" className="px-4 py-1 hover:bg-white/10 rounded-full cursor-pointer">
             Change Password
           </a>
-          <a className="px-4 py-1 hover:bg-white/10 rounded-full cursor-pointer">
-            Notifications
+          <a href="/resumeBuilder" className="px-4 py-1 hover:bg-white/10 rounded-full cursor-pointer">
+            Resume Builder
           </a>
         </div>
 

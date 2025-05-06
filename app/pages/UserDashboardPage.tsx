@@ -1,7 +1,16 @@
 import Header from "../components/Header";
 import Footer from "~/components/Footer";
+import { useState } from "react";
 
 export function UserDashboardPage() {
+
+    const [file, setFile] = useState<File | null>(null);
+
+    const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const uploadedFile = e.target.files ? e.target.files[0] : null;
+        setFile(uploadedFile);
+      };
+      
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white font-sans flex flex-col">
         <Header />
@@ -14,12 +23,31 @@ export function UserDashboardPage() {
                 <div className="backdrop-blur-md bg-white/10 border border-white/10 p-4 rounded-md flex items-center justify-between">
                     <h2 className="text-2xl font-semibold mb-0">Resume Builder</h2>
                     <div className="flex gap-4">
-                                <button className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
-                                    Upload
-                                </button>   
-                                <button className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition">
-                                    Edit
-                                </button>
+                    <a
+                        href="/resumeBuilder"
+                        className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition"
+                    >
+                        Edit
+                    </a>
+
+                    {/* Upload Button - Trigger File Upload */}
+                    <label
+                        htmlFor="resume-upload"
+                        className="px-4 py-2 bg-white text-gray-800 rounded-sm hover:bg-gray-800 hover:text-white transition cursor-pointer"
+                    >
+                        Upload
+                    </label>
+                    <input
+                        id="resume-upload"
+                        type="file"
+                        className="hidden"
+                        onChange={handleFileUpload}
+                    />
+                    {file && (
+                        <span className="text-sm text-gray-200">
+                        Uploaded: {file.name}
+                        </span>
+                    )}
                     </div>
                 </div>
                 {/* Community Boards Section */}

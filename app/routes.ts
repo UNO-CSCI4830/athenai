@@ -20,5 +20,6 @@ export default [
     route("/registrations", "routes/registrations.tsx"),
     route("/editProfile", "routes/editProfile.tsx"),
     route("/changePassword", "routes/changePassword.tsx"),
+    route("/resumeBuilder", "routes/resumeBuilder.tsx"),
 
 ] satisfies RouteConfig;
