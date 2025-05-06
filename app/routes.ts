@@ -10,6 +10,7 @@ export default [
     route("/profile", "routes/profile.tsx"),
     route("/dashboard", "routes/userDashboard.tsx"),
     route("/modules", "routes/modules.tsx"),
+    route("/aichat", "routes/aichat.tsx"),
     route("/about", "routes/about.tsx"),
     route("/contact", "routes/contact.tsx"),
     route("/careers", "routes/careers.tsx"),
@@ -21,5 +22,4 @@ export default [
     route("/editProfile", "routes/editProfile.tsx"),
     route("/changePassword", "routes/changePassword.tsx"),
     route("/resumeBuilder", "routes/resumeBuilder.tsx"),
-
 ] satisfies RouteConfig;
