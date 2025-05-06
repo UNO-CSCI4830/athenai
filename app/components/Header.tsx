@@ -47,6 +47,7 @@ const Header = () => {
             {/* Navigation */}
             <nav className="ml-6 flex space-x-8">
               <a href="/" className="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+              <a href="/aichat" className="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">AI Chat</a>
               <a href="/groups" className="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Groups</a>
               <a href="/postings" className="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Internships</a>
               <a href="/profile" className="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Profile</a>
