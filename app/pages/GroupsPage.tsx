@@ -21,14 +21,14 @@ export function GroupsPage() {
   const [newGroupDesc, setNewGroupDesc] = useState("");
   const [newGroupPic, setNewGroupPic] = useState("");
 
-  useEffect(() => {
-      const fetchData = async () => {
-          const result = await getMyData();
-          setData(result);
-          setLoading(false);
-      };
+  const fetchData = async () => {
+    const result = await getMyData();
+    setData(result);
+    setLoading(false);
+};
+
+  useEffect(() => {    
     fetchData();
-    
   }, []);
 
   const getMyData = async (): Promise<GroupDataType[]> => { //Used for reading from database
@@ -59,6 +59,7 @@ export function GroupsPage() {
       profilePic:newGroupPic
     }
     await writeData(data);
+    await fetchData();
     setNewGroupName("");
     setNewGroupDesc("");
     setNewGroupPic("");

@@ -33,14 +33,16 @@ export function PostCard({docIds, username, content, avatarColor, degree, likes}
   return () => unsubscribe();
   }, []);
 
+  const fetchData = async () => {
+    const result = await getMyData();
+    setData(result);
+    setLoading(false);
+};
+
   useEffect(() => { //Grab replies data
-    const fetchData = async () => {
-        const result = await getMyData();
-        setData(result);
-        setLoading(false);
-    };
   fetchData();
   }, []);
+
 
   const getMyData = async (): Promise<CommentsType[]> => { //Used for reading from database
     const myData: CommentsType[] = [];
@@ -66,6 +68,7 @@ export function PostCard({docIds, username, content, avatarColor, degree, likes}
       name: uName
     }
     await writeData(data);
+    await fetchData();
   }
 
   const writeData = async (data: CommentsType): Promise<void> => { //used for writing
@@ -84,8 +87,8 @@ export function PostCard({docIds, username, content, avatarColor, degree, likes}
     setReactLikes(temp);
     const data: PostDataType = {
       likes: temp,
-      message: username,
-      name: content
+      message: content,
+      name: username
     }
     const specificDoc = doc(firestore, 'groups', docIds[0], 'posts', docIds[1])
     setDoc(specificDoc, data);

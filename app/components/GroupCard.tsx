@@ -29,12 +29,13 @@ export function GroupCard({docId, name, description, groupPic}:{docId:string, na
   const [postInput, setPostInput] = useState("");
   const tailwindColorsLength = tailwindColors.length
 
+  const fetchData = async () => {
+    const result = await getMyData();
+    setData(result);
+    setLoading(false);
+  };
+
   useEffect(() => { //Grab posts data
-    const fetchData = async () => {
-        const result = await getMyData();
-        setData(result);
-        setLoading(false);
-    };
   fetchData();
   }, []);
 
@@ -79,6 +80,7 @@ export function GroupCard({docId, name, description, groupPic}:{docId:string, na
       name: uName
     }
     await writeData(data);
+    await fetchData();
   }
 
   const writeData = async (data: PostDataType): Promise<void> => { //used for writing
