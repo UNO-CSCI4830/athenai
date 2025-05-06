@@ -281,7 +281,7 @@ export default function InternshipPage() {
                       >
                         Apply Now
                       </button>
-                        {appliedConfirm[parseInt(i.id)-1] && <p className='pl-4 text-green-500'>Applied! {i.id}</p>}
+                        {appliedConfirm[parseInt(i.id)-1] && <p className='pl-4 text-green-500'>Applied!</p>}
                       </div>
                     </div>
                   ))}
