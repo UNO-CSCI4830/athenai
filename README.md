@@ -6,22 +6,22 @@ At the core of AthenA.I. is an intelligent AI assistant developed to provide per
 # Ollama Installation
 In order to use the AI Chat page of AthenA.I., Ollama is required to be running locally
 
-MacOS/Linux
-curl -fsSL https://ollama.com/install.sh | sh
-ollama pull mistral
-ollama serve
+## MacOS/Linux
+curl -fsSL https://ollama.com/install.sh | sh  
+ollama pull mistral  
+ollama serve  
 
 
-Windows
-Windows requires WSL to run ollama
+## Windows
+Windows requires WSL to run ollama  
 
-  wsl --install -d Ubuntu
+  wsl --install -d Ubuntu  
 
-Installing wsl will require a restart
+Installing wsl will require a restart  
 
-After in wsl:
-curl -fsSL https://ollama.com/install.sh | sh
-ollama pull mistral
-ollama serve
+After in wsl:  
+curl -fsSL https://ollama.com/install.sh | sh  
+ollama pull mistral  
+ollama serve  
 
-Ollama will default to port 11434
+## Ollama will default to port 11434  
