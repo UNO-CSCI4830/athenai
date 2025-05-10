@@ -25,7 +25,7 @@ export function GroupsPage() {
     const result = await getMyData();
     setData(result);
     setLoading(false);
-};
+  };
 
   useEffect(() => {    
     fetchData();
@@ -59,7 +59,10 @@ export function GroupsPage() {
       profilePic:newGroupPic
     }
     await writeData(data);
+    docIdArr.length = 0;
+    setLoading(true);
     await fetchData();
+    setLoading(false);
     setNewGroupName("");
     setNewGroupDesc("");
     setNewGroupPic("");
